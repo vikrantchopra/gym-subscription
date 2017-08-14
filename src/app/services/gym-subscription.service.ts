@@ -20,20 +20,8 @@ export class GymSubscriptionService {
   }
 
   refreshStatus() {
-    
-    //this.table.findAll({Type: 'Monthly'}).fetch().subscribe(msg => console.log(msg));
-
-    //this.table.below({ StartDate: new Date('08-08-2017') }).fetch().subscribe(msg => console.log(msg));
-
     var rec;
-    //this.table.find({Email: 'vikrant.chopra@kofax.com'}).fetch().subscribe(result => rec = result);
-    /*this.table.find({ Email: 'vikrant.chopra@kofax.com' }).fetch().subscribe(result => { rec = result;
-      this.table.update({
-        id: rec.id,
-        Status: "INACTIVE"
-      });
-    });*/
-
+    
     this.table.below({ StartDate: new Date('08-08-2017') }).fetch().subscribe(result => {
       rec = result;
       rec.forEach(element => {
@@ -43,7 +31,6 @@ export class GymSubscriptionService {
         });
       });
     });
-    
   }
 
   save(model: Subscription) {

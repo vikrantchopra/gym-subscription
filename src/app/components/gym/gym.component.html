@@ -57,6 +57,8 @@
   <p-header>
     <div class="ui-helper-clearfix">
       <button type="button" pButton icon="fa-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="float:left"></button><b>Gym Subscription List</b>
+
+      <button type="button" pButton icon="fa fa-refresh" iconPos="left" label="Refresh" (click)="refreshStatus()" style="float:right"></button>
     </div>
   </p-header>
   <p-column field="Receipt" header="Receipt No" [style]="{'width':'100px'}" [sortable]="true"></p-column>

@@ -15,13 +15,17 @@ export class GymComponent implements OnInit {
 
   constructor(private service: GymSubscriptionService) { }
 
-  ngOnInit() {this.service.refreshStatus();
+  ngOnInit() {
     this.loadSubscriptions();
     this.gymSubscription = this.initializeSubscriptions();
   }
 
   loadSubscriptions() {
     this.items = this.service.getSubscriptions();
+  }
+
+  refreshStatus() {
+    this.service.refreshStatus();
   }
 
   initializeSubscriptions() {
