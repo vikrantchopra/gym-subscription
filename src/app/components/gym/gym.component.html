@@ -1,0 +1,87 @@
+<form #gymForm="ngForm" (ngSubmit)="addSubscription(gymForm.value)">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <div class="ui-g-1"></div>
+      <p-fieldset class="ui-g-8" legend="Add Gym Subscription" [style]="{'padding':'0px 5px', 'padding-left':'15px', 'padding-bottom': '10px'}">
+
+        <div class="ui-g-12">
+
+          <label class="ui-g-4" style="padding-left:10em">Employee Name</label>
+          <input type="text" [(ngModel)]="gymSubscription.employeeName" name="employeeName" #employeeName="ngModel" class="form-control ui-g-4"
+            pInputText>
+
+        </div>
+
+        <div class="ui-g-6 ui-g-nopad">
+          <div class="ui-g-12">
+            <label class="ui-g-3">Gym ID</label>
+            <input type="text" [(ngModel)]="gymSubscription.gymid" name="gymid" #gymid="ngModel" class="form-control ui-g-6" pInputText>
+          </div>
+          <div class="ui-g-12">
+            <label class="ui-g-3">Receipt No</label>
+            <input type="text" [(ngModel)]="gymSubscription.receipt" name="receipt" #receipt="ngModel" class="form-control ui-g-6" pInputText>
+          </div>
+          <div class="ui-g-12">
+            <label class="ui-g-3">Payment Date</label>
+
+            <p-calendar [(ngModel)]="gymSubscription.startDate" class="form-control ui-g-6 ui-g-nopad" name="startDate" #startDate="ngModel"
+              [showIcon]="true"></p-calendar>
+          </div>
+        </div>
+
+        <div class="ui-g-6 ui-g-nopad">
+          <div class="ui-g-12">
+            <label class="ui-g-3">Amount</label>
+            <input type="text" [(ngModel)]="gymSubscription.amountPaid" name="amountPaid" #amountPaid="ngModel" class="form-control ui-g-6"
+              pInputText>
+          </div>
+          <div class="ui-g-12">
+            <label class="ui-g-3">Status</label>
+            <input type="text" [(ngModel)]="gymSubscription.status" name="status" #status="ngModel" class="form-control ui-g-6" pInputText>
+          </div>
+          <div class="ui-g-12">
+            <label class="ui-g-3">Comments</label>
+            <input type="text" [(ngModel)]="gymSubscription.comments" name="comments" #comments="ngModel" class="form-control ui-g-6"
+              pInputText>
+          </div>
+        </div>
+        <button pButton label="Add" type="submit" style="margin-top: 5px"></button>
+      </p-fieldset>
+      <div class="ui-g-1"></div>
+    </div>
+    <!--button pButton label="Add" type="submit" style="margin-bottom: 5px; margin-left: 10em"></button-->
+  </div>
+</form>
+
+<p-dataTable #dt [value]="items | async" dataKey="id" exportFilename="subscription-list">
+  <p-header>
+    <div class="ui-helper-clearfix">
+      <button type="button" pButton icon="fa-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="float:left"></button><b>Gym Subscription List</b>
+    </div>
+  </p-header>
+  <p-column field="Receipt" header="Receipt No" [style]="{'width':'100px'}" [sortable]="true"></p-column>
+  <p-column field="GymId" header="Gym ID" [style]="{'width':'80px'}" [sortable]="true"></p-column>
+  <p-column field="Name" header="Name" [style]="{'width':'130px'}" [sortable]="true"></p-column>
+  <p-column field="Email" header="Email" [style]="{'width':'180px'}"></p-column>
+  <p-column field="Amount" header="Amount Paid" [style]="{'width':'100px'}"></p-column>
+  <p-column field="StartDate" header="Payment Date" sortable="true" [style]="{'width':'120px'}">
+    <ng-template let-col let-date="rowData" pTemplate="body">
+      <span>{{date[col.field] | date}}</span>
+    </ng-template>
+  </p-column>
+  <p-column field="Validity" header="Validity" sortable="true" [style]="{'width':'120px'}">
+    <ng-template let-col let-date="rowData" pTemplate="body">
+      <span>{{date[col.field] | date:'MMM  y'}}</span>
+    </ng-template>
+  </p-column>
+  <p-column field="Type" header="Subscription Type" [style]="{'width':'120px'}"></p-column>
+  <!--p-column field="Status" header="Status" [style]="{'width':'120px'}"></p-column-->
+
+  <p-column field="Status" header="Status" [style]="{'width':'120px'}">
+    <ng-template let-col let-state="rowData" pTemplate="body">
+      <span [style.color]="state[col.field]==='ACTIVE'?'green':'red'">{{state[col.field]}}</span>
+    </ng-template>
+  </p-column>
+
+  <p-column field="Comments" header="Comments" [style]="{'width':'150px'}"></p-column>
+</p-dataTable>
