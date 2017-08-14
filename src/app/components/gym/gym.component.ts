@@ -12,6 +12,7 @@ export class GymComponent implements OnInit {
 
   items: any;
   gymSubscription: Subscription;
+  selectedRecords: any[];
 
   constructor(private service: GymSubscriptionService) { }
 
