@@ -4,3 +4,11 @@
 body {
     font-size: small;
 }
+
+i {
+    font-size: 18px;
+}
+
+.ui-panel-titlebar {
+    display: none !important;
+}

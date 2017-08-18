@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { GymComponent } from './components/gym/gym.component';
 import { HorizonService } from './services/horizon.service';
 
-import {TabViewModule, FieldsetModule, InputTextModule, CalendarModule, ButtonModule, DataTableModule} from 'primeng/primeng';
+import {DialogModule, DataGridModule, SelectButtonModule, PanelModule, TabViewModule, FieldsetModule, InputTextModule, CalendarModule, ButtonModule, DataTableModule} from 'primeng/primeng';
+import { EditSubscriptionComponent } from './components/edit-subscription/edit-subscription.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GymComponent
+    GymComponent,
+    EditSubscriptionComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -25,7 +27,11 @@ import {TabViewModule, FieldsetModule, InputTextModule, CalendarModule, ButtonMo
     InputTextModule,
     CalendarModule,
     ButtonModule,
-    DataTableModule
+    DataTableModule,
+    PanelModule,
+    SelectButtonModule,
+    DataGridModule,
+    DialogModule
   ],
   providers: [HorizonService],
   bootstrap: [AppComponent]

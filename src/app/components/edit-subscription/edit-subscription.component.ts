@@ -5,24 +5,24 @@ import { SelectItem } from 'primeng/primeng';
 import { UtilService } from '../../services/util.service';
 
 @Component({
-  selector: 'app-gym',
-  templateUrl: './gym.component.html',
-  styleUrls: ['./gym.component.css'],
+  selector: 'app-edit-subscription',
+  templateUrl: './edit-subscription.component.html',
+  styleUrls: ['./edit-subscription.component.css'],
   providers: [GymSubscriptionService, UtilService]
 })
-export class GymComponent implements OnInit {
+export class EditSubscriptionComponent implements OnInit {
 
   items: any;
   gymSubscription: Subscription;
-  selectedRecords: any[];
-
   amount: SelectItem[];
+  statusValues: SelectItem[];
 
-  selectedRecord: any;
+  selectedRecord:any;
   displayDialog: boolean;
 
-  constructor(private service: GymSubscriptionService, private utilService: UtilService) {
+  constructor(private service: GymSubscriptionService, private utilService: UtilService) { 
     this.amount = utilService.getAmountValues();
+    this.statusValues = utilService.getStatusValues();
   }
 
   ngOnInit() {
@@ -46,7 +46,7 @@ export class GymComponent implements OnInit {
       receipt: '',
       amountPaid: 1000,
       startDate: null,
-      // validity: null,
+     // validity: null,
       status: 'ACTIVE',
       comments: '',
       phone: '',
@@ -60,21 +60,18 @@ export class GymComponent implements OnInit {
     return sub;
   }
 
-  addSubscription(model: Subscription) {
-    this.service.save(model);
-    this.gymSubscription = this.initializeSubscriptions();
-  }
-
-  
   selectEmergencyDetails(emergencyDetails: any) {
     this.selectedRecord = emergencyDetails;
     //console.log("GYM ID: " + emergencyDetails.GymId);
     this.displayDialog = true;
   }
 
+  deleteRecord(details: any) {
+    this.service.delete(details);
+  }
+
   onDialogHide() {
     this.selectedRecord = null;
   }
-  
 
 }

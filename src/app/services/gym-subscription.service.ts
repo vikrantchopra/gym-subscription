@@ -37,6 +37,7 @@ export class GymSubscriptionService {
     this.table.store({
       GymId: model.gymid,
       Name: model.employeeName,
+      Phone: model.phone,
       Receipt: model.receipt,
       Amount: model.amountPaid,
       StartDate: model.startDate,
@@ -45,10 +46,21 @@ export class GymSubscriptionService {
       Email: this.formEmail(model.employeeName),
       Status: "ACTIVE",
       Comments: model.comments,
-
-      Type: this.getSubscriptionType(model.amountPaid)
+      Type: this.getSubscriptionType(model.amountPaid),
+      Contact: model.contactName,
+      EmergencyPhone: model.contactPhone,
+      Relation: model.relation,
+      DoctorName: model.doctorName,
+      DoctorPhone: model.doctorPhone,
+      Ailments: model.ailments
     });
 
+  }
+
+  delete(item: any) { //console.log("EmpID: " + emp.empid);
+    //this.table.remove(emp);
+    this.table.remove(item.id);
+    //messages.remove({id: 101});
   }
 
   validity(amount: Number, startDate: Date) {
