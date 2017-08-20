@@ -3,12 +3,13 @@ import { Subscription } from '../../models';
 import { GymSubscriptionService } from '../../services/gym-subscription.service';
 import { SelectItem } from 'primeng/primeng';
 import { UtilService } from '../../services/util.service';
+import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'app-edit-subscription',
   templateUrl: './edit-subscription.component.html',
   styleUrls: ['./edit-subscription.component.css'],
-  providers: [GymSubscriptionService, UtilService]
+  providers: [GymSubscriptionService, UtilService, ConfirmationService]
 })
 export class EditSubscriptionComponent implements OnInit {
 
@@ -17,10 +18,10 @@ export class EditSubscriptionComponent implements OnInit {
   amount: SelectItem[];
   statusValues: SelectItem[];
 
-  selectedRecord:any;
+  selectedRecord: any;
   displayDialog: boolean;
 
-  constructor(private service: GymSubscriptionService, private utilService: UtilService) { 
+  constructor(private service: GymSubscriptionService, private utilService: UtilService, private confirmationService: ConfirmationService) {
     this.amount = utilService.getAmountValues();
     this.statusValues = utilService.getStatusValues();
   }
@@ -46,7 +47,7 @@ export class EditSubscriptionComponent implements OnInit {
       receipt: '',
       amountPaid: 1000,
       startDate: null,
-     // validity: null,
+      // validity: null,
       status: 'ACTIVE',
       comments: '',
       phone: '',
@@ -60,10 +61,24 @@ export class EditSubscriptionComponent implements OnInit {
     return sub;
   }
 
-  selectEmergencyDetails(emergencyDetails: any) {
-    this.selectedRecord = emergencyDetails;
+  editSubscription(item: any) {
+    this.selectedRecord = item;
     //console.log("GYM ID: " + emergencyDetails.GymId);
     this.displayDialog = true;
+  }
+
+  confirmDeletion(item: any) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'fa fa-question-circle',
+      accept: () => {
+        this.deleteRecord(item);
+      },
+      reject: () => {
+        console.log("Deletion Rejected");
+      }
+    });
   }
 
   deleteRecord(details: any) {

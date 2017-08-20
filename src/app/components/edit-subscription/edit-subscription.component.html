@@ -1,3 +1,5 @@
+<p-confirmDialog></p-confirmDialog>
+
 <div class="ui-g">
   <div class="ui-g-1"></div>
   <div class="ui-g-10">
@@ -26,9 +28,10 @@
       <p-column [style]="{'width':'120px', 'text-align':'center'}" header="Edit/Delete">
 
         <ng-template let-item="rowData" pTemplate="body">
-          <button type="button" pButton (click)="selectEmergencyDetails(item)" icon="fa-edit"></button>
+          <button type="button" pButton (click)="editSubscription(item)" icon="fa-edit"></button>
 
-          <button type="button" pButton (click)="deleteRecord(item)" icon="fa-trash" class="ui-button-danger"></button>
+          <!--button type="button" pButton (click)="deleteRecord(item)" icon="fa-trash" class="ui-button-danger"></button-->
+          <button type="button" pButton (click)="confirmDeletion(item)" icon="fa-trash" class="ui-button-danger"></button>
         </ng-template>
       </p-column>
 

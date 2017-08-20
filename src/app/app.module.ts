@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { GymComponent } from './components/gym/gym.component';
 import { HorizonService } from './services/horizon.service';
 
-import {DialogModule, DataGridModule, SelectButtonModule, PanelModule, TabViewModule, FieldsetModule, InputTextModule, CalendarModule, ButtonModule, DataTableModule} from 'primeng/primeng';
+import {ConfirmDialogModule,DialogModule, DataGridModule, SelectButtonModule, PanelModule, TabViewModule, FieldsetModule, InputTextModule, CalendarModule, ButtonModule, DataTableModule} from 'primeng/primeng';
 import { EditSubscriptionComponent } from './components/edit-subscription/edit-subscription.component';
 
 @NgModule({
@@ -31,7 +31,8 @@ import { EditSubscriptionComponent } from './components/edit-subscription/edit-s
     PanelModule,
     SelectButtonModule,
     DataGridModule,
-    DialogModule
+    DialogModule,
+    ConfirmDialogModule
   ],
   providers: [HorizonService],
   bootstrap: [AppComponent]
