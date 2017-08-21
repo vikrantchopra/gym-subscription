@@ -17,6 +17,7 @@ export class EditSubscriptionComponent implements OnInit {
   gymSubscription: Subscription;
   amount: SelectItem[];
   statusValues: SelectItem[];
+  changedStatus: string;
 
   selectedRecord: any;
   displayDialog: boolean;
@@ -61,13 +62,52 @@ export class EditSubscriptionComponent implements OnInit {
     return sub;
   }
 
-  editSubscription(item: any) {
-    this.selectedRecord = item;
-    //console.log("GYM ID: " + emergencyDetails.GymId);
+  onEditRow(item: any) {//console.log("Name::: " + item.Name);
+    this.gymSubscription = this.cloneSubscription(item);
+    //console.log("Name Gym Subbbb::: " + this.gymSubscription.employeeName);
     this.displayDialog = true;
   }
 
-  confirmDeletion(item: any) {
+  cloneSubscription(model: any) {console.log("Name: " + model.Name);
+    
+    //var sub1: Subscription = this.initializeSubscriptions();
+     /*for(let prop in model) {
+        //this.gymSubscription[prop] = item[prop];
+        sub1[prop] = model[prop];
+        this.gymSubscription[prop] = model[prop];
+        console.log("Gym: " + sub1[prop] + " ITEM: " + model[prop]);
+       
+    }*/
+    
+    let sub = {
+      id: model.id,
+      gymid: model.GymId,
+      employeeName: model.Name,
+      receipt: model.Receipt,
+      amountPaid: model.Amount,
+      startDate: model.StartDate,
+      // validity: null,
+      status: model.Status,
+      comments: model.Comments,
+      phone: model.Phone,
+      contactName: model.Contact,
+      contactPhone: model.EmergencyPhone,
+      relation: model.Relation,
+      doctorName: model.DoctorName,
+      doctorPhone: model.DoctorPhone,
+      ailments: model.Ailments
+    };
+    //console.log("Name: " + model.Name);
+    
+    return sub;
+  }
+
+  updateSubscription(model: Subscription) {
+    this.service.update(model);
+    this.displayDialog = false;
+  }
+
+  confirmDeletion(item: any) {console.log("Name: " + item.Name);
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -82,11 +122,18 @@ export class EditSubscriptionComponent implements OnInit {
   }
 
   deleteRecord(details: any) {
+    
     this.service.delete(details);
   }
 
   onDialogHide() {
     this.selectedRecord = null;
+  }
+
+  updateRecord(model: Subscription) {
+    this.service.update(model);
+    this.displayDialog = false;
+    this.initializeSubscriptions();
   }
 
 }

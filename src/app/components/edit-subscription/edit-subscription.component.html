@@ -28,7 +28,7 @@
       <p-column [style]="{'width':'120px', 'text-align':'center'}" header="Edit/Delete">
 
         <ng-template let-item="rowData" pTemplate="body">
-          <button type="button" pButton (click)="editSubscription(item)" icon="fa-edit"></button>
+          <button type="button" pButton (click)="onEditRow(item)" icon="fa-edit"></button>
 
           <!--button type="button" pButton (click)="deleteRecord(item)" icon="fa-trash" class="ui-button-danger"></button-->
           <button type="button" pButton (click)="confirmDeletion(item)" icon="fa-trash" class="ui-button-danger"></button>
@@ -40,10 +40,98 @@
   <div class="ui-g-1"></div>
 </div>
 
-<p-panel [toggleable]="true" [style]="{'margin-bottom':'20px'}" styleClass="ui-panel-title">
-  The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding. His beloved
-  son Michael has just come home from the war, but does not intend to become part of his father's business. Through Michael's
-  life the nature of the family business becomes clear. The business of the family is just like the head of the family, kind
-  and benevolent to those who give respect, but given to ruthless violence whenever anything stands against the good of the
-  family.
-</p-panel>
+<p-dialog header="Edit Subscription" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [style]="{'minimum-width': '500px'}">
+  <form #gymForm="ngForm" (ngSubmit)="updateSubscription(gymForm.value)">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-g-nopad" style="text-align: center">
+        <label class="ui-g-12 ui-g-nopad"><h3>{{gymSubscription.employeeName}}</h3></label>
+      </div>
+
+      <p-panel [toggleable]="true" [style]="{'margin-bottom':'20px'}" styleClass="ui-panel-title" class="ui-g-6">
+        <div class="">
+
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">ReceiptNo</label>
+            <input type="text" [(ngModel)]="gymSubscription.receipt" name="receipt" #receipt="ngModel" class="form-control ui-grid-col-8"
+              pInputText>
+          </div>
+          <div class="ui-g-12"></div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">Phone</label>
+            <input type="text" [(ngModel)]="gymSubscription.phone" name="phone" #phone="ngModel" class="form-control ui-grid-col-8" pInputText>
+          </div>
+          <div class="ui-g-12"></div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">Status</label>
+            <p-selectButton [options]="statusValues" [(ngModel)]="gymSubscription.status" name="status" #status="ngModel" 
+            class="form-control ui-grid-col-8 ui-g-nopad" [style]="{'font-size': 'x-small'}"></p-selectButton>
+            <!--input type="text" [(ngModel)]="gymSubscription.status" name="status" #status="ngModel" class="form-control ui-grid-col-8"
+              pInputText-->
+          </div>
+          <div class="ui-g-12"></div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">Start Date</label>
+            <p-calendar [(ngModel)]="gymSubscription.startDate" class="form-control ui-grid-col-8 ui-g-nopad" name="startDate" #startDate="ngModel"
+              [showIcon]="true"></p-calendar>
+          </div>
+          <div class="ui-g-12"></div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">Amount Paid</label>
+            <!--input type="text" [(ngModel)]="gymSubscription.amountPaid" name="amountPaid" #amountPaid="ngModel" class="form-control ui-grid-col-8"
+              pInputText-->
+            <p-selectButton [options]="amount" [(ngModel)]="gymSubscription.amountPaid" name="amountPaid" #amountPaid="ngModel" class="form-control ui-grid-col-8 ui-g-nopad"></p-selectButton>
+          </div>
+          <div class="ui-g-12"></div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">Comments</label>
+            <textarea pInputTextarea [(ngModel)]="gymSubscription.comments" name="comments" #comments="ngModel" class="form-control ui-grid-col-8"
+              rows="3" cols="20"></textarea>
+
+          </div>
+
+        </div>
+      </p-panel>
+
+      <p-panel [toggleable]="true" [style]="{'margin-bottom':'20px'}" styleClass="ui-panel-title" class="ui-g-6">
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Contact Name</label>
+          <input type="text" [(ngModel)]="gymSubscription.contactName" name="contactName" #contactName="ngModel" class="form-control ui-grid-col-8"
+            pInputText>
+        </div>
+        <div class="ui-g-12"></div>
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Contact Phone</label>
+          <input type="text" [(ngModel)]="gymSubscription.contactPhone" name="contactPhone" #contactPhone="ngModel" class="form-control ui-grid-col-8"
+            pInputText>
+        </div>
+        <div class="ui-g-12"></div>
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Relationship</label>
+          <input type="text" [(ngModel)]="gymSubscription.relation" name="relation" #relation="ngModel" class="form-control ui-grid-col-8"
+            pInputText>
+        </div>
+        <div class="ui-g-12"></div>
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Doctor Name</label>
+          <input type="text" [(ngModel)]="gymSubscription.doctorName" name="doctorName" #doctorName="ngModel" class="form-control ui-grid-col-8"
+            pInputText>
+        </div>
+        <div class="ui-g-12"></div>
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Doctor Phone</label>
+          <input type="text" [(ngModel)]="gymSubscription.doctorPhone" name="doctorPhone" #doctorPhone="ngModel" class="form-control ui-grid-col-8"
+            pInputText>
+        </div>
+        <div class="ui-g-12"></div>
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Health Issues</label>
+          <textarea pInputTextarea [(ngModel)]="gymSubscription.ailments" name="ailments" #ailments="ngModel" class="form-control ui-grid-col-8"
+            rows="3" cols="20"></textarea>
+        </div>
+
+      </p-panel>
+
+    </div>
+    <button pButton label="Submit" type="submit" style="margin-bottom: 5px"></button>
+  </form>
+</p-dialog>

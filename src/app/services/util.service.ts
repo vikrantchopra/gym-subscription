@@ -13,9 +13,9 @@ export class UtilService {
     this.amount.push({ label: '2700', value: 2700 });
 
     this.statusValues = [];
-    this.statusValues.push({ label: 'ACTIVE', value: 'ACTIVE' });
-    this.statusValues.push({ label: 'INACTIVE', value: 'INACTIVE' });
-    this.statusValues.push({ label: 'DISCONTINUED', value: 'INACTIVE' });
+    this.statusValues.push({ label: 'Active', value: 'ACTIVE' });
+    this.statusValues.push({ label: 'Inactive', value: 'INACTIVE' });
+    this.statusValues.push({ label: 'Disabled', value: 'DISCONTINUED' });
   }
 
   getAmountValues() {

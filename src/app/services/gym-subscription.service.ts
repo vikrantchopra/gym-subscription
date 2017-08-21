@@ -35,6 +35,7 @@ export class GymSubscriptionService {
 
   save(model: Subscription) {
     this.table.store({
+      id: model.id,
       GymId: model.gymid,
       Name: model.employeeName,
       Phone: model.phone,
@@ -55,6 +56,12 @@ export class GymSubscriptionService {
       Ailments: model.ailments
     });
 
+  }
+
+  update(model: Subscription) {
+    this.table.update({
+      
+    });
   }
 
   delete(item: any) { //console.log("EmpID: " + emp.empid);
@@ -89,5 +96,6 @@ export class GymSubscriptionService {
     return "ACTIVE";
   }
 
+  
 
 }
