@@ -49,7 +49,11 @@
 
       <p-panel [toggleable]="true" [style]="{'margin-bottom':'20px'}" styleClass="ui-panel-title" class="ui-g-6">
         <div class="">
-
+          <div class="ui-grid-row" style="display: none">
+            
+            <input type="text" [(ngModel)]="gymSubscription.id" name="id" #id="ngModel" class="form-control ui-grid-col-8"
+              pInputText>
+          </div>
           <div class="ui-grid-row">
             <label class="ui-grid-col-4">ReceiptNo</label>
             <input type="text" [(ngModel)]="gymSubscription.receipt" name="receipt" #receipt="ngModel" class="form-control ui-grid-col-8"

@@ -60,7 +60,25 @@ export class GymSubscriptionService {
 
   update(model: Subscription) {
     this.table.update({
-      
+      id: model.id,
+      //GymId: model.gymid,
+      //Name: model.employeeName,
+      Phone: model.phone,
+      Receipt: model.receipt,
+      Amount: model.amountPaid,
+      StartDate: model.startDate,
+      Validity: this.validity(model.amountPaid, model.startDate),
+      //Validity: model.startDate,
+      //Email: this.formEmail(model.employeeName),
+      Status: model.status,
+      Comments: model.comments,
+      Type: this.getSubscriptionType(model.amountPaid),
+      Contact: model.contactName,
+      EmergencyPhone: model.contactPhone,
+      Relation: model.relation,
+      DoctorName: model.doctorName,
+      DoctorPhone: model.doctorPhone,
+      Ailments: model.ailments
     });
   }
 

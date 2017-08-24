@@ -109,7 +109,7 @@ export class EditSubscriptionComponent implements OnInit {
 
   confirmDeletion(item: any) {console.log("Name: " + item.Name);
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure you want to Delete the record?',
       header: 'Confirmation',
       icon: 'fa fa-question-circle',
       accept: () => {
@@ -133,7 +133,7 @@ export class EditSubscriptionComponent implements OnInit {
   updateRecord(model: Subscription) {
     this.service.update(model);
     this.displayDialog = false;
-    this.initializeSubscriptions();
+    this.gymSubscription = this.initializeSubscriptions();
   }
 
 }

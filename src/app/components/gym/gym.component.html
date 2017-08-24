@@ -79,17 +79,17 @@
     </div>
   </p-header>
   <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
-  <p-column field="Receipt" header="Receipt No" [style]="{'width':'100px'}" [sortable]="true"></p-column>
+  <p-column field="Receipt" header="Receipt No" [style]="{'width':'80px'}" [sortable]="true"></p-column>
   <p-column field="GymId" header="Gym ID" [style]="{'width':'80px'}" [sortable]="true"></p-column>
   <p-column field="Name" header="Name" [style]="{'width':'130px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-  <p-column field="Email" header="Email" [style]="{'width':'180px'}"></p-column>
-  <p-column field="Amount" header="Amount Paid" [style]="{'width':'100px'}"></p-column>
+  <p-column field="Email" header="Email" [style]="{'width':'200px'}"></p-column>
+  <p-column field="Amount" header="Amount Paid" [style]="{'width':'60px'}"></p-column>
   <p-column field="StartDate" header="Payment Date" sortable="true" [style]="{'width':'120px'}">
     <ng-template let-col let-date="rowData" pTemplate="body">
       <span>{{date[col.field] | date}}</span>
     </ng-template>
   </p-column>
-  <p-column field="Validity" header="Validity" sortable="true" [style]="{'width':'120px'}">
+  <p-column field="Validity" header="Validity" sortable="true" [style]="{'width':'100px'}">
     <ng-template let-col let-date="rowData" pTemplate="body">
       <span>{{date[col.field] | date:'MMM  y'}}</span>
     </ng-template>
