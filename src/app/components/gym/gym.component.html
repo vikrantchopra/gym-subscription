@@ -1,3 +1,5 @@
+<p-confirmDialog></p-confirmDialog>
+
 <form #gymForm="ngForm" (ngSubmit)="addSubscription(gymForm.value)">
   <p-panel header="Gym Subscriptions" [style]="{'border-radius': '10px'}">
     <div class="ui-g">
@@ -83,6 +85,7 @@
   <p-column field="GymId" header="Gym ID" [style]="{'width':'80px'}" [sortable]="true"></p-column>
   <p-column field="Name" header="Name" [style]="{'width':'130px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
   <p-column field="Email" header="Email" [style]="{'width':'200px'}"></p-column>
+  <p-column field="Phone" header="Phone" [style]="{'width':'80px'}"></p-column>
   <p-column field="Amount" header="Amount Paid" [style]="{'width':'60px'}"></p-column>
   <p-column field="StartDate" header="Payment Date" sortable="true" [style]="{'width':'120px'}">
     <ng-template let-col let-date="rowData" pTemplate="body">
@@ -94,10 +97,10 @@
       <span>{{date[col.field] | date:'MMM  y'}}</span>
     </ng-template>
   </p-column>
-  <p-column field="Type" header="Membership" [style]="{'width':'120px'}" [filter]="true" filterPlaceholder="Search"></p-column>
+  <p-column field="Type" header="Membership" [style]="{'width':'110px'}" [filter]="true" filterPlaceholder="Search"></p-column>
   <!--p-column field="Status" header="Status" [style]="{'width':'120px'}"></p-column-->
 
-  <p-column field="Status" header="Status" [style]="{'width':'120px'}" [filter]="true" filterPlaceholder="Search">
+  <p-column field="Status" header="Status" [style]="{'width':'90px'}" [filter]="true" filterPlaceholder="Search">
     <ng-template let-col let-state="rowData" pTemplate="body">
       <span [style.color]="state[col.field]==='ACTIVE'?'green':'red'">{{state[col.field]}}</span>
     </ng-template>
@@ -110,6 +113,8 @@
     </ng-template>
     <ng-template let-item="rowData" pTemplate="body">
       <button type="button" pButton (click)="selectEmergencyDetails(item)" icon="fa-search"></button>
+      <button type="button" pButton (click)="onEditRow(item)" icon="fa-edit"></button>     
+      <button type="button" pButton (click)="confirmDeletion(item)" icon="fa-trash" class="ui-button-danger"></button>
     </ng-template>
   </p-column>
 
@@ -120,7 +125,7 @@
   </p-footer>
 </p-dataTable>
 
-<p-dialog header="Emergency Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" width="400"
+<p-dialog header="Emergency Details" [(visible)]="displayEmergencyDialog" [responsive]="true" showEffect="fade" [modal]="true" width="400"
   (onAfterHide)="onDialogHide()" [style]="{'border-radius': '10', 'background': 'lightgrey'}">
   <div class="ui-grid ui-grid-responsive ui-grid-pad" *ngIf="selectedRecord" style="font-size:16px;text-align:left;padding:20px">
 
@@ -150,4 +155,105 @@
     </div>
 
   </div>
+</p-dialog>
+
+
+<p-dialog header="Edit Subscription" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [style]="{'minimum-width': '500px'}">
+  <form #editForm="ngForm" (ngSubmit)="updateSubscription(editForm.value)">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-g-nopad" style="text-align: center">
+        <label class="ui-g-12 ui-g-nopad"><h3>{{editSubscription.employeeName}}</h3></label>
+      </div>
+
+      <p-panel [toggleable]="true" [style]="{'margin-bottom':'20px'}" styleClass="ui-panel-title" class="ui-g-6">
+        <div class="">
+          <div class="ui-grid-row" style="display: none">
+            
+            <input type="text" [(ngModel)]="editSubscription.id" name="id" #id="ngModel" class="form-control ui-grid-col-8"
+              pInputText>
+          </div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">ReceiptNo</label>
+            <input type="text" [(ngModel)]="editSubscription.receipt" name="receipt" #receipt="ngModel" class="form-control ui-grid-col-8"
+              pInputText>
+          </div>
+          <div class="ui-g-12"></div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">Phone</label>
+            <input type="text" [(ngModel)]="editSubscription.phone" name="phone" #phone="ngModel" class="form-control ui-grid-col-8" pInputText>
+          </div>
+          <div class="ui-g-12"></div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">Status</label>
+            <p-selectButton [options]="statusValues" [(ngModel)]="editSubscription.status" name="status" #status="ngModel" 
+            class="form-control ui-grid-col-8 ui-g-nopad" [style]="{'font-size': 'x-small'}"></p-selectButton>
+            <!--input type="text" [(ngModel)]="gymSubscription.status" name="status" #status="ngModel" class="form-control ui-grid-col-8"
+              pInputText-->
+          </div>
+          <div class="ui-g-12"></div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">Start Date</label>
+            <p-calendar [(ngModel)]="editSubscription.startDate" class="form-control ui-grid-col-8 ui-g-nopad" name="startDate" #startDate="ngModel"
+              [showIcon]="true"></p-calendar>
+          </div>
+          <div class="ui-g-12"></div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">Amount Paid</label>
+            <!--input type="text" [(ngModel)]="gymSubscription.amountPaid" name="amountPaid" #amountPaid="ngModel" class="form-control ui-grid-col-8"
+              pInputText-->
+            <p-selectButton [options]="amount" [(ngModel)]="editSubscription.amountPaid" name="amountPaid" #amountPaid="ngModel" class="form-control ui-grid-col-8 ui-g-nopad"></p-selectButton>
+          </div>
+          <div class="ui-g-12"></div>
+          <div class="ui-grid-row">
+            <label class="ui-grid-col-4">Comments</label>
+            <textarea pInputTextarea [(ngModel)]="editSubscription.comments" name="comments" #comments="ngModel" class="form-control ui-grid-col-8"
+              rows="3" cols="20"></textarea>
+
+          </div>
+
+        </div>
+      </p-panel>
+
+      <p-panel [toggleable]="true" [style]="{'margin-bottom':'20px'}" styleClass="ui-panel-title" class="ui-g-6">
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Contact Name</label>
+          <input type="text" [(ngModel)]="editSubscription.contactName" name="contactName" #contactName="ngModel" class="form-control ui-grid-col-8"
+            pInputText>
+        </div>
+        <div class="ui-g-12"></div>
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Contact Phone</label>
+          <input type="text" [(ngModel)]="editSubscription.contactPhone" name="contactPhone" #contactPhone="ngModel" class="form-control ui-grid-col-8"
+            pInputText>
+        </div>
+        <div class="ui-g-12"></div>
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Relationship</label>
+          <input type="text" [(ngModel)]="editSubscription.relation" name="relation" #relation="ngModel" class="form-control ui-grid-col-8"
+            pInputText>
+        </div>
+        <div class="ui-g-12"></div>
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Doctor Name</label>
+          <input type="text" [(ngModel)]="editSubscription.doctorName" name="doctorName" #doctorName="ngModel" class="form-control ui-grid-col-8"
+            pInputText>
+        </div>
+        <div class="ui-g-12"></div>
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Doctor Phone</label>
+          <input type="text" [(ngModel)]="editSubscription.doctorPhone" name="doctorPhone" #doctorPhone="ngModel" class="form-control ui-grid-col-8"
+            pInputText>
+        </div>
+        <div class="ui-g-12"></div>
+        <div class="ui-grid-row">
+          <label class="ui-grid-col-4">Health Issues</label>
+          <textarea pInputTextarea [(ngModel)]="editSubscription.ailments" name="ailments" #ailments="ngModel" class="form-control ui-grid-col-8"
+            rows="3" cols="20"></textarea>
+        </div>
+
+      </p-panel>
+
+    </div>
+    <button pButton label="Submit" type="submit" style="margin-bottom: 5px"></button>
+  </form>
 </p-dialog>
